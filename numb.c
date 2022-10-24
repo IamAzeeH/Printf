@@ -59,3 +59,72 @@ int print_number(char *str, params_t *params)
 
 /**
  * print_number_right_shift - prints a number with options
+ * @str: the base number as a string
+ * @params: the parameter struct
+ *
+ * Return: chars printed
+ */
+int print_number_right_shift(char *str, params_t *params)
+{
+	unsigned int n = 0, dot, dot2, i = _strlen(str);
+	char cat_char = ' ';
+
+	if (params->zero_flag && !params->minus_flag)
+		cat_char = '0';
+	dot = dot2 = (!params->unsign && *str == '-');
+	if (dot && i < params->width && cat_char == '0' && !params->minus_flag)
+		str++;
+	else
+		dot = 0;
+	if ((params->plus_flag && !dot2) ||
+		(!params->plus_flag && params->space_flag && !dot2))
+		i++;
+	if (dot && cat_char == '0')
+		n += _putchar('-');
+	if (params->plus_flag && !dot2 && cat_char == '0' && !params->unsign)
+		n += _putchar('+');
+	else if (!params->plus_flag && params->space_flag && !dot2 &&
+		!params->unsign && params->zero_flag)
+		n += _putchar(' ');
+	while (i++ < params->width)
+		n += _putchar(cat_char);
+	if (dot && cat_char == ' ')
+		n += _putchar('-');
+	if (params->plus_flag && !dot2 && cat_char == ' ' && !params->unsign)
+		n += _putchar('+');
+	else if (!params->plus_flag && params->space_flag && !dot2 &&
+		!params->unsign && !params->zero_flag)
+		n += _putchar(' ');
+	n += _puts(str);
+	return (n);
+}
+
+/**
+ * print_number_left_shift - prints a number with options
+ * @str: the base number as a string
+ * @params: the parameter struct
+ *
+ * Return: characters printed
+ */
+int print_number_left_shift(char *str, params_t *params)
+{
+	unsigned int n = 0, dot, dot2, i = _strlen(str);
+	char cat_char = ' ';
+
+	if (params->zero_flag && !params->minus_flag)
+		cat_char = '0';
+	dot = dot2 = (!params->unsign && *str == '-');
+	if (dot && i < params->width && cat_char == '0' && !params->minus_flag)
+		str++;
+	else
+		dot = 0;
+
+	if (params->plus_flag && !dot2 && !params->unsign)
+		n += _putchar('+'), i++;
+	else if (params->space_flag && !dot2 && !params->unsign)
+		n += _putchar(' '), i++;
+	n += _puts(str);
+	while (i++ < params->width)
+		n += _putchar(cat_char);
+	return (n);
+}
